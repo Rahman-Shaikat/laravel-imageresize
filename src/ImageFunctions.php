@@ -68,7 +68,7 @@ class ImageFunctions
             }
 
             // ✅ Return relative public path, not system path
-            $results[$type] = "storage/{$path}/{$filename}";
+            $results[$type] = $path . '/' . $filename;
         }
 
         imagedestroy($sourceImage);
