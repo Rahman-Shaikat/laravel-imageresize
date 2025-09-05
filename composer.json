@@ -19,5 +19,12 @@
         "php": ">=8.0",
         "illuminate/support": "^9.0|^10.0|^11.0|^12.0"
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "WallE\\LaravelImageresize\\ImageResizerServiceProvider"
+            ]
+        }
+    },
     "minimum-stability": "dev"
 }
