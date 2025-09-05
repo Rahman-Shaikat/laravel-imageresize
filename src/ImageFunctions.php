@@ -19,7 +19,7 @@ class ImageFunctions
      * @return array
      * @throws Exception
      */
-    public static function upload($image, string $path, array $sizes = []): array
+    public static function upload($image, $path, $sizes = []): array
     {
         // Handle GdImage object
         if ($image instanceof \GdImage) {
@@ -51,24 +51,28 @@ class ImageFunctions
 
         foreach ($sizes as $type => $dimensions) {
             $filename = $baseFilename . '-' . $type . '.' . $outputExt;
-            $tempPath = storage_path('app/temp-images/' . $filename);
-            File::ensureDirectoryExists(dirname($tempPath));
+
+            // ✅ Final storage path (public disk)
+            $finalPath = storage_path("app/public/{$path}/{$filename}");
+            File::ensureDirectoryExists(dirname($finalPath));
 
             $targetWidth = $dimensions['width'] ?? $originalWidth;
             $targetHeight = $dimensions['height'] ?? (int)($originalHeight * ($targetWidth / $originalWidth));
 
             if ($type === 'original') {
-                self::saveImageResource($sourceImage, $tempPath, $outputExt);
+                self::saveImageResource($sourceImage, $finalPath, $outputExt);
             } else {
                 $resizedImage = self::resizeImage($sourceImage, $originalWidth, $originalHeight, $targetWidth, $targetHeight);
-                self::saveImageResource($resizedImage, $tempPath, $outputExt);
+                self::saveImageResource($resizedImage, $finalPath, $outputExt);
                 imagedestroy($resizedImage);
             }
 
-            $results[$type] = $tempPath;
+            // ✅ Return relative public path, not system path
+            $results[$type] = "storage/{$path}/{$filename}";
         }
 
         imagedestroy($sourceImage);
+
         return $results;
     }
 
