@@ -1,0 +1,23 @@
+{
+    "name": "wall-e/laravel-imageresize",
+    "description": "A Laravel package to upload and resize images easily with automatic aspect ratio.",
+    "type": "library",
+    "license": "MIT",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "WallE\\LaravelImageresize\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rahman-Shaikat",
+            "email": "shaikat3257@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "illuminate/support": "^9.0|^10.0|^11.0|^12.0"
+    },
+    "minimum-stability": "dev"
+}
